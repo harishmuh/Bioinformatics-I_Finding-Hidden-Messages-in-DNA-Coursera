@@ -1,0 +1,42 @@
+# Find most frequent kmer in dna strings and how frequent # Using dictionary
+# Section: Hide and seek with motifs
+
+'''
+Our aim is to turn the biological challenge of finding regulatory motifs into a computational problem.
+Below, we have implanted a 15-mer hidden message at a randomly selected position in each of ten randomly generated DNA strings.
+This example mimics a transcription factor binding site hiding in the upstream regions of ten genes
+'''
+
+dna_strings = ["atgaccgggatactgataaaaaaaagggggggggcgtacacattagataaacgtatgaagtacgttagactcggcgccgccg",
+    "acccctattttttgagcagatttagtgacctggaaaaaaaatttgagtacaaaacttttccgaataaaaaaaaaggggggga",
+    "tgagtatccctgggatgacttaaaaaaaagggggggtgctctcccgatttttgaatatgtaggatcattcgccagggtccga",
+    "gctgagaattggatgaaaaaaaagggggggtccacgcaatcgcgaaccaacgcggacccaaaggcaagaccgataaaggaga",
+    "tcccttttgcggtaatgtgccgggaggctggttacgtagggaagccctaacggacttaataaaaaaaagggggggcttatag",
+    "gtcaatcatgttcttgtgaatggatttaaaaaaaaggggggggaccgcttggcgcacccaaattcagtgtgggcgagcgcaa",
+    "cggttttggcccttgttagaggcccccgtaaaaaaaagggggggcaattatgagagagctaatctatcgcgtgcgtgttcat",
+    "aacttgagttaaaaaaaagggggggctggggcacatacaagaggagtcttccttatcagttaatgctgtatgacactatgta",
+    "ttggcccattggctaaaagcccaacttgacaaatggaagatagaatccttgcataaaaaaaagggggggaccgaaagggaag",
+    "ctggtgagcaacgacagattcttacgtgcattagctcgcttccggggatctaatagcacgaagcttaaaaaaaaggggggga"]
+
+kmer_length = 15
+
+
+# Identify patterns in each string
+pattern_length = 15
+
+# Check the frequency of all possible 15-mers across strings
+from collections import defaultdict
+
+kmer_counts = defaultdict(int)
+
+for dna in dna_strings:
+    for i in range(len(dna) - pattern_length + 1):
+        kmer = dna[i:i + pattern_length]
+        kmer_counts[kmer] += 1
+
+# Find the most frequent 15-mer
+max_count = max(kmer_counts.values())
+most_frequent_kmers = [kmer for kmer, count in kmer_counts.items() if count == max_count]
+
+print('The most frequent patterns/kmer:', most_frequent_kmers) # Output, The most frequent patterns/kmer: ['aaaaaaaaggggggg']
+print('The most frequent pattern count:', max_count) # Output, The most frequent pattern count: 10
